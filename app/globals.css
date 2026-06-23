@@ -7,32 +7,152 @@ html {
 body {
   margin: 0;
   padding: 0;
-  background: black;
-  color: white;
+  background: #000;
+  color: #fff;
   overflow-x: hidden;
 }
 
-/* 🌌 GLOBAL ANIMATED BACKGROUND */
-@keyframes floatMove {
-  0% {
-    transform: translate(0px, 0px) scale(1);
-  }
-  50% {
-    transform: translate(-80px, 60px) scale(1.25);
-  }
-  100% {
-    transform: translate(0px, 0px) scale(1);
+/* ══════════════════════════════════════════════
+   PARALLAX SECTIONS
+   كل section له صورة خلفية ثابتة مع تأثير العمق
+══════════════════════════════════════════════ */
+.parallax-section {
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+/* على الموبايل: نوقف الـ parallax لأداء أفضل */
+@media (max-width: 768px) {
+  .parallax-section {
+    background-attachment: scroll;
   }
 }
 
+/* ══════════════════════════════════════════════
+   ANIMATED BACKGROUND GLOW
+══════════════════════════════════════════════ */
+@keyframes moveBackground {
+  0%   { transform: translateY(0px) translateX(0px); }
+  50%  { transform: translateY(-40px) translateX(30px); }
+  100% { transform: translateY(0px) translateX(0px); }
+}
+
 .bg-glow {
+  position: fixed;
+  width: 600px;
+  height: 600px;
+  border-radius: 9999px;
+  filter: blur(120px);
+  background: rgba(234, 179, 8, 0.08);
+  animation: moveBackground 20s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ══════════════════════════════════════════════
+   SLOW ZOOM for hero image
+══════════════════════════════════════════════ */
+@keyframes zoomSlow {
+  0%   { transform: scale(1); }
+  100% { transform: scale(1.08); }
+}
+
+.animate-zoomSlow {
+  animation: zoomSlow 18s ease-in-out infinite alternate;
+}
+
+/* ══════════════════════════════════════════════
+   FADE IN UP — scroll reveal
+══════════════════════════════════════════════ */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.fade-in-up-delay-1 { animation-delay: 0.15s; opacity: 0; animation-fill-mode: forwards; animation-name: fadeInUp; animation-duration: 0.8s; }
+.fade-in-up-delay-2 { animation-delay: 0.30s; opacity: 0; animation-fill-mode: forwards; animation-name: fadeInUp; animation-duration: 0.8s; }
+.fade-in-up-delay-3 { animation-delay: 0.45s; opacity: 0; animation-fill-mode: forwards; animation-name: fadeInUp; animation-duration: 0.8s; }
+
+/* ══════════════════════════════════════════════
+   GOLD SHINE — للأرقام والعناوين
+══════════════════════════════════════════════ */
+@keyframes goldShine {
+  0%   { text-shadow: 0 0 10px rgba(234,179,8,0); }
+  50%  { text-shadow: 0 0 30px rgba(234,179,8,0.6), 0 0 60px rgba(234,179,8,0.2); }
+  100% { text-shadow: 0 0 10px rgba(234,179,8,0); }
+}
+
+.gold-shine {
+  animation: goldShine 3s ease-in-out infinite;
+}
+
+/* ══════════════════════════════════════════════
+   CARD HOVER GLOW
+══════════════════════════════════════════════ */
+.card-glow {
+  transition: all 0.3s ease;
+}
+
+.card-glow:hover {
+  border-color: rgba(234, 179, 8, 0.7);
+  box-shadow: 0 0 30px rgba(234, 179, 8, 0.15), 0 8px 32px rgba(0,0,0,0.4);
+  transform: translateY(-4px);
+}
+
+/* ══════════════════════════════════════════════
+   COUNTER NUMBER PULSE
+══════════════════════════════════════════════ */
+@keyframes countPulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.05); }
+}
+
+.stat-number {
+  animation: countPulse 4s ease-in-out infinite;
+}
+
+/* ══════════════════════════════════════════════
+   NAVBAR LINK UNDERLINE
+══════════════════════════════════════════════ */
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
   position: absolute;
-  inset: -200px;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(234,179,8,0.18), transparent 40%),
-    radial-gradient(circle at 80% 30%, rgba(234,179,8,0.12), transparent 45%),
-    radial-gradient(circle at 40% 80%, rgba(234,179,8,0.10), transparent 50%);
-  filter: blur(90px);
-  animation: floatMove 20s ease-in-out infinite;
-  will-change: transform;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #eab308;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* ══════════════════════════════════════════════
+   HERO GRADIENT OVERLAY
+══════════════════════════════════════════════ */
+.hero-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.5) 0%,
+    rgba(0,0,0,0.65) 50%,
+    rgba(0,0,0,0.85) 100%
+  );
 }
